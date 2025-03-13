@@ -6,21 +6,36 @@
  *
  */
 
-import {EditorThemeClasses} from 'lexical';
-import invariant from 'shared/invariant';
+import { EditorThemeClasses } from 'lexical'
 
 export function getThemeSelector(
-  getTheme: () => EditorThemeClasses | null | undefined,
-  name: keyof EditorThemeClasses,
+	getTheme: () => EditorThemeClasses | null | undefined,
+	name: keyof EditorThemeClasses
 ): string {
-  const className = getTheme()?.[name];
-  invariant(
-    typeof className === 'string',
-    'getThemeClass: required theme property %s not defined',
-    String(name),
-  );
-  return className
-    .split(/\s+/g)
-    .map((cls) => `.${cls}`)
-    .join();
+	const className = getTheme()?.[name]
+
+	if (!className) {
+		return ''
+	}
+
+	return className
+		.split(/\s+/g)
+		.map((cls: string) => `.${cls}`)
+		.join('')
 }
+
+// export function getThemeSelector(
+// 	getTheme: () => EditorThemeClasses | null | undefined,
+// 	name: keyof EditorThemeClasses
+// ): string {
+// 	const className = getTheme()?.[name]
+// 	// invariant(
+// 	//   typeof className === 'string',
+// 	//   'getThemeClass: required theme property %s not defined',
+// 	//   String(name),
+// 	// );
+// 	return className
+// 		.split(/\s+/g)
+// 		.map(cls => `.${cls}`)
+// 		.join()
+// }
